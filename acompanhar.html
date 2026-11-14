@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Acompanhar pedido — ALITA’S</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#211916;background:#f6efe6}*{box-sizing:border-box}body{margin:0;padding:24px}.wrap{max-width:620px;margin:7vh auto;background:#fffaf3;border:1px solid #e4d6c6;border-radius:18px;padding:24px}h1{font-size:1.5rem;margin:0 0 8px}p{color:#6d5d55}.status{font-size:1.25rem;font-weight:750;margin:22px 0 8px}.steps{display:grid;gap:10px;margin:22px 0}.step{padding:13px;border:1px solid #e4d6c6;border-radius:10px;color:#786b64}.step.active{border-color:#237a4b;background:#edf7f0;color:#175c37;font-weight:700}.step.done{color:#237a4b}.details{border-top:1px solid #e4d6c6;padding-top:14px;margin-top:18px}.line{display:flex;justify-content:space-between;gap:16px;padding:5px 0}.muted{font-size:.85rem;color:#6d5d55}a{color:#8d3029}button{border:0;border-radius:9px;padding:12px 16px;background:#211916;color:white;font-weight:700;cursor:pointer}@media(max-width:520px){body{padding:12px}.wrap{padding:18px}}
+</style></head><body><main class="wrap"><h1>ALITA’S — Acompanhar pedido</h1><p>Consulta o estado actualizado do teu pedido.</p><div id="content">A carregar pedido...</div></main>
+<script>
+const params=new URLSearchParams(location.search),id=params.get('id'),token=params.get('token');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const statuses=['Recebido','Confirmado','Em preparação','Saiu para entrega','Pronto para levantamento','Entregue'];
+async function load(){
+ const root=document.querySelector('#content');
+ if(!id||!token){root.textContent='Link de acompanhamento inválido.';return}
+ try{
+  const r=await fetch('/api/orders?id='+encodeURIComponent(id)+'&token='+encodeURIComponent(token));const d=await r.json();if(!r.ok)throw new Error(d.error||'Pedido não encontrado.');
+  const idx=statuses.indexOf(d.status);const items=(d.items||[]).map(x=>`<div class="line"><span>${esc(x.quantity)} × ${esc(x.name)}</span><b>${(x.quantity*x.unit_price).toLocaleString('pt-PT')} MT</b></div>`).join('');
+  root.innerHTML=`<div class="status">${esc(d.status)}</div><p>Pedido #${esc(d.id.slice(0,8).toUpperCase())} · ${new Date(d.created_at).toLocaleString('pt-PT')}</p><div class="steps">${statuses.map((s,i)=>`<div class="step ${d.status==='Cancelado'?'':i<idx?'done':i===idx?'active':''}">${i<idx?'✓':'•'} &nbsp; ${s}</div>`).join('')}${d.status==='Cancelado'?'<div class="step active">Pedido cancelado</div>':''}</div><div class="details"><b>Resumo</b>${items}<div class="line"><span>Subtotal</span><b>${Number(d.subtotal).toLocaleString('pt-PT')} MT</b></div><div class="line"><span>Entrega</span><b>${d.delivery_fee===null?'A confirmar':Number(d.delivery_fee).toLocaleString('pt-PT')+' MT'}</b></div><div class="line"><b>Total</b><b>${Number(d.total).toLocaleString('pt-PT')} MT${d.delivery_fee===null?' + entrega':''}</b></div><p class="muted">${esc(d.fulfillment)} · ${esc(d.zone||d.store_name)}</p></div><p class="muted">Esta página actualiza automaticamente a cada 15 segundos. Guarda este link para voltares a consultar o pedido.</p>`;
+ }catch(e){root.textContent=e.message}
+}
+load();setInterval(load,15000);
+</script></body></html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<script>window.addEventListener("error",function(e){console.error("Erro no site:",e.message,e.filename,e.lineno)})</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Menu e pedidos online da ALITA’S Picantes em Maputo e Matola.">
+<title>ALITA’S Picantes — Sabor que conquista</title>
+<style>
+:root{--bg:#f6efe6;--card:#fffaf3;--ink:#1a1210;--mute:#6d5d55;--red:#a8231f;--red2:#c4452f;--line:#e4d6c6;--soft:#f0dccb;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#140d0c;--card:#1f1413;--ink:#f6efe6;--mute:#b9a89d;--red:#d2413a;--red2:#e0603f;--line:#33211f;--soft:#2a1a18}}
+:root[data-theme="dark"]{--bg:#140d0c;--card:#1f1413;--ink:#f6efe6;--mute:#b9a89d;--red:#d2413a;--red2:#e0603f;--line:#33211f;--soft:#2a1a18}
+html{scroll-padding-top:70px}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+h1,h2,h3{font-family:"Oswald","Arial Narrow",Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em;line-height:1.1}
+button,input,select,textarea{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:12px 18px}
+.logo{font-family:"Oswald",Impact,sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:.04em;cursor:pointer}
+.logo b{color:var(--red)}
+nav{margin-left:auto;display:flex;gap:4px}
+nav a{padding:8px 10px;font-size:.85rem;text-decoration:none;color:var(--mute);border-radius:8px;cursor:pointer}
+nav a:hover,nav a.on{color:var(--red)}
+.cartbtn{position:relative;background:var(--red);color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:600;cursor:pointer}
+.cartbtn span{background:#fff;color:var(--red);border-radius:99px;padding:0 7px;margin-left:6px;font-size:.8rem}
+main{max-width:1000px;margin:auto;padding:0 18px 90px}
+.view{display:none;animation:in .35s ease}.view.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.btn{display:inline-block;background:var(--red);color:#fff;border:0;border-radius:10px;padding:13px 24px;font-weight:700;letter-spacing:.05em;cursor:pointer;text-decoration:none}
+.btn.alt{background:transparent;border:1.5px solid var(--red);color:var(--red)}
+h2{font-size:1.7rem;margin:34px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.ph{height:110px;border-radius:10px;background:var(--soft) center/cover;display:flex;align-items:center;justify-content:center;font-family:"Oswald",sans-serif;color:var(--red);font-size:1.4rem;letter-spacing:.06em}
+.card h3{font-size:1.1rem}.card p{color:var(--mute);font-size:.85rem;flex:1}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.price{font-weight:700;color:var(--red)}
+.add{background:var(--ink);color:var(--bg);border:0;border-radius:8px;padding:8px 12px;font-size:.82rem;cursor:pointer}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px}
+.tab{white-space:nowrap;border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:8px 16px;cursor:pointer}
+.tab.on{background:var(--red);border-color:var(--red);color:#fff}
+.search{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);margin:8px 0}
+.note{color:var(--mute);font-size:.88rem;padding:18px;border:1px dashed var(--line);border-radius:12px}
+.stores{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.store{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.store a{color:var(--red);font-weight:600;text-decoration:none}
+.promo{background:var(--soft);border-radius:14px;padding:18px}
+.halal{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
+label{display:block;font-size:.85rem;color:var(--mute);margin:12px 0 4px}
+.f{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card)}
+.seg{display:flex;gap:8px}.seg button{flex:1;padding:11px;border:1.5px solid var(--line);background:var(--card);border-radius:10px;cursor:pointer}.seg .on{background:var(--red);color:#fff;border-color:var(--red)}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:16px}
+.ln{display:flex;justify-content:space-between;padding:5px 0;font-size:.92rem}
+.tot{font-weight:700;font-size:1.1rem;border-top:1px solid var(--line);margin-top:8px;padding-top:10px}
+#drawer{position:fixed;inset:0;background:#0009;display:none;z-index:40}#drawer.on{display:block}
+#panel{position:absolute;right:0;top:0;bottom:0;width:min(400px,100%);background:var(--bg);padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;animation:sl .25s ease}
+@keyframes sl{from{transform:translateX(30px);opacity:0}}
+#items{flex:1;overflow:auto;margin:12px 0}
+.it{padding:12px 0;border-bottom:1px solid var(--line)}
+.q{display:flex;align-items:center;gap:8px;margin-top:6px}
+.q button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.q .rm{width:auto;margin-left:auto;padding:0 10px;color:var(--red)}
+.wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:#1f8f4e;color:#fff;border-radius:99px;padding:12px 18px;font-weight:600;text-decoration:none;z-index:15;cursor:pointer;border:0}
+footer{text-align:center;color:var(--mute);font-size:.8rem;padding:30px 18px 80px}
+@media(max-width:560px){nav a{padding:8px 6px;font-size:.78rem}.logo{font-size:1.2rem}}
+.brand{height:44px;border-radius:8px;cursor:pointer;display:block}
+.th{width:46px;height:46px;border-radius:8px;background:var(--soft) center/cover;flex:none}.th.s{width:30px;height:30px}
+.ph{height:150px}
+.card .ph{background-size:cover}
+.ph{position:relative;overflow:hidden}.ph>span{position:relative;z-index:0}.product-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px}.th{display:flex;align-items:center;justify-content:center;overflow:hidden}.th img{width:100%;height:100%;object-fit:cover;border-radius:8px}.cat>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.cat>b{z-index:2}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.cat{height:160px;border-radius:14px;background:#2a0d0c center/cover;color:#fff;display:flex;align-items:flex-end;padding:14px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s}
+.cat:hover{transform:translateY(-3px)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,#000b)}
+.cat b{position:relative;z-index:1;font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:1.25rem;letter-spacing:.03em}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.step i{font-style:normal;font-family:"Oswald",Impact,sans-serif;color:var(--red);font-size:1.9rem}
+.step p{color:var(--mute);font-size:.88rem}
+.strip{background:linear-gradient(135deg,#1a0b0a,#7d1a17);color:#f6efe6;border-radius:16px;padding:26px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:34px}
+.strip .btn{background:#f6efe6;color:#7d1a17}
+.ft{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;margin-bottom:12px}
+.ig a{color:var(--red);text-decoration:none;font-weight:600}
+@media(min-width:900px){
+main{max-width:1240px;padding:0 40px 120px}
+header{padding:14px 40px}
+.brand{height:54px}
+nav a{font-size:1rem;padding:10px 16px}
+.cartbtn{padding:11px 20px}
+h2{font-size:2.4rem;margin:64px 0 24px}
+.grid{grid-template-columns:repeat(4,1fr);gap:22px}
+.card{padding:20px;gap:10px}.card h3{font-size:1.3rem}
+.ph{height:210px}
+.cats{gap:22px}.cat{height:280px;border-radius:20px}.cat b{font-size:1.8rem}
+.steps{grid-template-columns:repeat(4,1fr);gap:22px}.step{padding:26px}
+#v-sobre .steps{grid-template-columns:repeat(3,1fr)}
+.stores{grid-template-columns:repeat(4,1fr);gap:22px}.store{padding:24px}
+.strip{padding:44px 48px;margin-top:64px;border-radius:24px}.strip h3{font-size:2.2rem!important}
+.halal,.promo{padding:26px;margin-top:22px;font-size:1.05rem}
+footer{padding:60px 40px 100px;font-size:.95rem;border-top:1px solid var(--line);margin-top:60px}
+.tab{padding:11px 24px}.tabs{gap:12px}
+.search{max-width:520px}
+#v-checkout{max-width:720px;margin:0 auto}
+#v-sobre>p{max-width:720px;font-size:1.05rem}
+#panel{width:460px}
+}
+body{overflow-x:hidden}
+.hero2{position:relative;width:100vw;margin:0 calc(50% - 50vw) 10px;min-height:min(86vh,760px);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:#140807;color:#f6efe6}
+.herobg{position:absolute;inset:0;background:#140807 38% center/cover}
+.hero2::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#2a06068c,#2a060066 45%,#140605d9)}
+.hin{text-shadow:0 2px 16px #000b}
+.hin{position:relative;z-index:1;max-width:860px;padding:70px 20px}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff33;background:#0008;border-radius:99px;padding:8px 16px;font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#f2b98a}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#e0503f}
+.hin h1{font-size:clamp(2.4rem,8vw,5.2rem);margin:20px 0 14px}.hin h1 b{color:#f2b98a;display:block}
+.hin p{max-width:560px;margin:0 auto 26px;opacity:.92;font-size:1.1rem}
+.ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn.big{padding:16px 32px;font-size:1.05rem}
+.btn.ghost{background:#0007;border:1px solid #ffffff44;color:#f6efe6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:44px auto 0;max-width:640px}
+.stats div{background:#0007;border:1px solid #ffffff1f;border-radius:14px;padding:14px 8px}
+.stats b{display:block;font-family:"Oswald",Impact,sans-serif;font-size:1.7rem;color:#f2b98a}
+.stats span{font-size:.78rem;opacity:.8}
+@media(max-width:700px){.stats b{font-size:1.25rem}}
+</style>
+</head>
+<body>
+<noscript><p style="padding:20px">Ativa o JavaScript para fazer pedidos.</p></noscript>
+<header>
+  <img class="brand" id="brand" alt="ALITA’S Picantes" onclick="go('home')">
+  <nav>
+    <a data-v="home" onclick="go('home')">Início</a>
+    <a data-v="menu" onclick="go('menu')">Menu</a>
+    <a data-v="sobre" onclick="go('sobre')">Sobre</a>
+  </nav>
+  <button class="cartbtn" onclick="openCart()">Carrinho<span id="cnt">0</span></button>
+</header>
+<main>
+
+<section class="view on" id="v-home">
+  <div class="hero2"><div class="herobg" id="herobg"></div>
+    <div class="hin">
+      <span class="badge">Delivery em Maputo e Matola</span>
+      <h1>ALITA’S — <b>Sabor que conquista.</b></h1>
+      <p>Hambúrgueres, burritos e batatas carregadas. O teu sabor favorito, à distância de um pedido.</p>
+      <div class="ctas"><button class="btn big" onclick="go('menu')">FAZER PEDIDO</button><a class="btn ghost" id="herowa" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div>
+      <div class="stats"><div><b>Halal</b><span>Certificado</span></div><div><b>4</b><span>Lojas e delivery</span></div><div><b>490 MT</b><span>Preços a partir de</span></div></div>
+    </div></div>
+  <h2>Escolhe a categoria</h2><div class="cats" id="cats"></div>
+  <h2>Mais pedidos</h2><div class="grid" id="popular"></div>
+  <div class="strip"><div><h3 style="font-size:1.5rem">Delivery em Maputo e Matola</h3><p style="opacity:.9;margin-top:6px">Faz o pedido, escolhe a tua zona e partilha a localização para receberes em casa.</p></div><button class="btn" onclick="go('menu')">PEDIR AGORA</button></div>
+  <h2>Como pedir</h2>
+  <div class="steps"><div class="step"><i>1</i><h3>Escolhe</h3><p>Entra no menu e seleciona os teus produtos favoritos.</p></div><div class="step"><i>2</i><h3>Adiciona</h3><p>Junta ao carrinho e confere o valor total.</p></div><div class="step"><i>3</i><h3>Preenche</h3><p>Indica nome, telefone, zona e endereço, ou levantamento na loja.</p></div><div class="step"><i>4</i><h3>Envia</h3><p>Confirma e envia o pedido pelo WhatsApp da loja.</p></div></div>
+  <div class="halal"><div class="logo" style="color:var(--red)">HALAL</div><div>Certificado Halal pela Comissão Halal de Moçambique.</div></div>
+  <h2>Promoções e combos</h2>
+  <div class="promo">Os combos e promoções são anunciados nas lojas e no Instagram <b>@alitasmz</b>. Pergunta pelas ofertas do dia ao fazer o pedido.</div>
+  <h2>Localizações e contactos</h2><div class="stores" id="stores"></div>
+</section>
+
+<section class="view" id="v-menu">
+  <h2>Order Menu</h2>
+  <input class="search" id="q" placeholder="Pesquisar produtos" oninput="renderMenu()">
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="list"></div>
+</section>
+
+<section class="view" id="v-checkout">
+  <h2>Finalizar pedido</h2>
+  <label>Nome</label><input class="f" id="nome">
+  <label>Telefone</label><input class="f" id="tel" type="tel">
+  <label>Método de recebimento</label>
+  <div class="seg"><button id="m-del" class="on" onclick="setMode('Delivery')">Delivery</button><button id="m-lev" onclick="setMode('Levantamento na loja')">Levantamento na loja</button></div>
+  <div id="addrbox"><label>Zona de entrega</label><select class="f" id="zona" onchange="setZone(this.value)"></select>
+  <label>Endereço de entrega</label><input class="f" id="end" placeholder="Bairro, rua, ponto de referência">
+  <p style="margin-top:10px"><button type="button" class="btn alt" onclick="getLoc()">Partilhar a minha localização</button> <span id="locst" style="font-size:.82rem;color:var(--mute)"></span></p>
+  <p class="note" id="dinfo" style="margin-top:10px"></p></div>
+  <label>Loja pretendida</label><select class="f" id="loja" onchange="state.store=this.value;updMap()"></select>
+  <p style="margin-top:8px"><a id="lojamap" target="_blank" rel="noopener" style="color:var(--red);font-weight:600;text-decoration:none"></a></p>
+  <label>Observações</label><textarea class="f" id="obs" rows="3"></textarea>
+  <div class="sum" id="resumo"></div>
+  <p style="margin-top:16px"><button class="btn" onclick="confirmar()">CONFIRMAR PEDIDO</button></p>
+  <div class="sum" id="msgbox" style="display:none">
+    <pre id="msg" style="white-space:pre-wrap;font:inherit"></pre>
+    <p style="margin-top:12px"><a class="btn" id="wasend" target="_blank" rel="noopener">ENVIAR PELO WHATSAPP</a></p>
+  </div>
+</section>
+
+<section class="view" id="v-sobre">
+  <h2>Sobre a ALITA’S</h2>
+  <p style="margin-bottom:14px">A ALITA’S Picantes serve hambúrgueres, burritos e batatas carregadas em Maputo e Matola, com entrega ao domicílio.</p>
+  <div class="steps"><div class="step"><h3>No menu</h3><p>Hambúrgueres, burritos, twisters e batatas carregadas.</p></div><div class="step"><h3>Onde estamos</h3><p>Loja Ronil, Loja Matola e Loja Jardim, mais o serviço Delivery Maputo.</p></div><div class="step"><h3>Qualidade</h3><p>Certificado Halal pela Comissão Halal de Moçambique.</p></div></div>
+  <div class="halal"><div class="logo" style="color:var(--red)">HALAL</div><div>Certificado Halal emitido pela Comissão Halal de Moçambique (ALITAS Resotel, Maputo, 30.09.2021).</div></div>
+  <h2>Lojas</h2><div class="stores" id="stores2"></div>
+</section>
+</main>
+
+<a class="wa" id="wafloat" target="_blank" rel="noopener">WhatsApp</a>
+
+<div id="drawer" onclick="if(event.target===this)closeCart()">
+  <div id="panel">
+    <div class="row"><h2 style="margin:0">Carrinho</h2><button class="add" onclick="closeCart()">Fechar</button></div>
+    <div id="items"></div>
+    <div id="tots"></div>
+    <p style="margin-top:12px"><button class="btn" style="width:100%" onclick="closeCart();go('checkout')">FINALIZAR PEDIDO</button></p>
+  </div>
+</div>
+<footer><img class="brand" id="flogo" alt="ALITA’S Picantes" style="margin:0 auto 12px"><div class="ft ig"><a href="https://www.instagram.com/alitasmz/" target="_blank" rel="noopener">@alitasmz</a><span>@alitas_matola</span><span>@alitas.desserts</span><span>@alitas.jardim</span></div>ALITA’S Picantes — Maputo e Matola, Moçambique · Certificado Halal</footer>
+
+<script>
+/* ===== CONFIGURAÇÃO: edita aqui produtos, preços, lojas e taxa de entrega ===== */
+const CONFIG={
+  /* Delivery: fee = taxa em MT por zona (null = "a confirmar pela loja"); minOrder e freeFrom em MT (0 = desativado); eta = texto livre, ex. "30-45 min" */
+  delivery:{minOrder:0,freeFrom:0,eta:"",zones:[
+    {id:"maputo",name:"Maputo cidade",fee:null,store:"delivery"},
+    {id:"matola",name:"Matola",fee:null,store:"matola"},
+    {id:"jardim",name:"Jardim",fee:null,store:"jardim"}
+  ]},
+  currency:"MT",
+  defaultWhatsApp:"258847104132"
+};
+const STORES=[
+  {id:"ronil",name:"Loja Ronil",wa:"258857924173",addr:"Av. Karl Marx, 1304, Maputo",maps:"https://www.google.com/maps/search/?api=1&query=-25.96429,32.57538&query_place_id=ChIJcWXGCwCb5h4R8tuRMw6bY78"},
+  {id:"delivery",name:"Delivery Maputo",wa:"258847104132",addr:"Av. Ahmed Sekou Touré, Maputo",maps:"https://www.google.com/maps/search/?api=1&query=-25.96724,32.57922&query_place_id=ChIJ4fBUpaib5h4RtiozaTDTjpc"},
+  {id:"matola",name:"Loja Matola",wa:"258843910408",addr:"Matola",maps:"https://www.google.com/maps/search/?api=1&query=-25.96254,32.45422&query_place_id=ChIJdeLJbACF5h4R-zosLctGOOc"},
+  {id:"jardim",name:"Loja Jardim",wa:"258845191537",addr:"Av. de Moçambique, Maputo",maps:"https://www.google.com/maps/search/?api=1&query=-25.92672,32.55793&query_place_id=ChIJ8-UjAACb5h4R5IxdZwNKEgA"}
+];
+/* desc e img ficam vazios até haver informação oficial; img = URL da fotografia */
+const CATS=["Burritos","Hambúrgueres","Fries","Refrescos"];
+const PRODUCTS=[
+  {id:"b1",cat:"Burritos",name:"Beef Burrito",price:500,desc:"",img:"",pop:1},
+  {id:"b2",cat:"Burritos",name:"Mexican Burrito",price:500,desc:"",img:""},
+  {id:"b3",cat:"Burritos",name:"Steak Burrito",price:540,desc:"",img:""},
+  {id:"b4",cat:"Burritos",name:"Chicken Burrito",price:500,desc:"",img:""},
+  {id:"b5",cat:"Burritos",name:"Korean Twister",price:490,desc:"",img:""},
+  {id:"b6",cat:"Burritos",name:"Buffalo Twister",price:490,desc:"",img:""},
+  {id:"h1",cat:"Hambúrgueres",name:"Cheese Burger",price:490,desc:"",img:"",pop:1},
+  {id:"h2",cat:"Hambúrgueres",name:"Mexican Burger",price:490,desc:"",img:"",pop:1},
+  {id:"h3",cat:"Hambúrgueres",name:"Steak Burger",price:540,desc:"",img:""},
+  {id:"h4",cat:"Hambúrgueres",name:"American Burger",price:490,desc:"",img:""},
+  {id:"h5",cat:"Hambúrgueres",name:"Hawaiian Burger",price:490,desc:"",img:""},
+  {id:"h6",cat:"Hambúrgueres",name:"Alitas Burger",price:490,desc:"",img:""},
+  {id:"h7",cat:"Hambúrgueres",name:"Chicken Sandwich",price:490,desc:"",img:""},
+  {id:"h8",cat:"Hambúrgueres",name:"Healthy Burger",price:490,desc:"",img:""},
+  {id:"f1",cat:"Fries",name:"Buffalo Loaded Fries",price:580,desc:"",img:"",pop:1},
+  {id:"f2",cat:"Fries",name:"Korean Nachos",price:580,desc:"",img:""},
+  {id:"f3",cat:"Fries",name:"Korean Loaded Fries",price:580,desc:"",img:""},
+  {id:"f4",cat:"Fries",name:"Burger Fries",price:580,desc:"",img:""}
+  /* Refrescos: adicionar aqui, ex. {id:"r1",cat:"Refrescos",name:"Coca-Cola",size:"330 ml",price:0,...} */
+];
+/* fotografias: chave = id do produto (data URIs); substitui por URLs se preferires */
+const IMGS={"h1": "/images/h1.webp", "h2": "/images/h2.webp", "h3": "/images/h3.webp", "h4": "/images/h4.webp", "h5": "/images/h5.webp", "h6": "/images/h6.webp", "h7": "/images/h7.webp", "h8": "/images/h8.webp", "b1": "/images/b1.webp", "b2": "/images/b2.webp", "b3": "/images/b3.webp", "b4": "/images/b4.webp", "b5": "/images/b5.webp", "f1": "/images/f1.webp", "logo": "/images/logo.webp"};
+const ALIAS={"b6": "b5", "f2": "f1", "f3": "f1", "f4": "f1"};
+PRODUCTS.forEach(p=>p.img=IMGS[ALIAS[p.id]||p.id]||p.img);
+IMGS.hero="/images/hero.webp";
+/* ===== fim da configuração ===== */
+
+const $=s=>document.querySelector(s);
+const fmt=n=>n.toLocaleString("pt-PT")+" "+CONFIG.currency;
+const state={cat:"Burritos",cart:{},mode:"Delivery",store:"delivery",zone:"maputo",coords:""};
+try{const s=localStorage.getItem("alitas_cart");if(s)state.cart=JSON.parse(s)||{}}catch(e){}
+const save=()=>{try{localStorage.setItem("alitas_cart",JSON.stringify(state.cart))}catch(e){}};
+const prod=id=>PRODUCTS.find(p=>p.id===id);
+
+function go(v){
+  if(!["home","menu","checkout","sobre"].includes(v))v="home";
+  document.querySelectorAll(".view").forEach(e=>e.classList.toggle("on",e.id==="v-"+v));
+  document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
+  if(v==="checkout")renderSummary();
+  if(location.hash!=="#"+v)location.hash=v;
+  scrollTo(0,0);
+}
+addEventListener("hashchange",()=>go(location.hash.slice(1)));
+
+function card(p){
+  const photo=p.img?`<img class="product-photo" src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.remove()">`:"";
+  return `<div class="card"><div class="ph"><span>${p.name.split(" ")[0]}</span>${photo}</div>
+  <h3>${p.name}</h3><p>${p.desc||""}${p.size?" "+p.size:""}</p>
+  <div class="row"><span class="price">${fmt(p.price)}</span><button class="add" onclick="add('${p.id}')">Adicionar ao carrinho</button></div></div>`;
+}
+function renderMenu(){
+  $("#tabs").innerHTML=CATS.map(c=>`<button class="tab ${c===state.cat?"on":""}" onclick="state.cat='${c}';renderMenu()">${c}</button>`).join("");
+  const q=$("#q").value.trim().toLowerCase();
+  const list=PRODUCTS.filter(p=>q?p.name.toLowerCase().includes(q):p.cat===state.cat);
+  $("#list").innerHTML=list.length?list.map(card).join(""):`<div class="note" style="grid-column:1/-1">Ainda não há produtos nesta categoria. Os preços serão publicados em breve; consulta a loja pelo WhatsApp.</div>`;
+}
+function add(id){state.cart[id]=(state.cart[id]||0)+1;save();renderCart()}
+function chg(id,d){state.cart[id]=(state.cart[id]||0)+d;if(state.cart[id]<=0)delete state.cart[id];save();renderCart();renderSummary()}
+function del(id){delete state.cart[id];save();renderCart();renderSummary()}
+const zone=()=>CONFIG.delivery.zones.find(z=>z.id===state.zone);
+function totals(){
+  let sub=0,n=0;for(const id in state.cart){const p=prod(id);if(p){sub+=p.price*state.cart[id];n+=state.cart[id]}}
+  const D=CONFIG.delivery,z=zone();let fee=0,pending=false;
+  if(state.mode==="Delivery"&&!(D.freeFrom&&sub>=D.freeFrom)){if(z&&typeof z.fee==="number")fee=z.fee;else pending=true}
+  return{sub,n,fee,pending,total:sub+fee};
+}
+function totHTML(t){
+  const feeTxt=state.mode!=="Delivery"?"não aplicável":(t.pending?"a confirmar":(t.fee?fmt(t.fee):"Grátis"));
+  return `<div class="ln"><span>Subtotal</span><span>${fmt(t.sub)}</span></div>
+  <div class="ln"><span>Taxa de entrega</span><span>${feeTxt}</span></div>
+  <div class="ln tot"><span>TOTAL</span><span>${fmt(t.total)}${t.pending?" + entrega":""}</span></div>`;
+}
+function renderCart(){
+  const t=totals();$("#cnt").textContent=t.n;
+  const ids=Object.keys(state.cart).filter(prod);
+  $("#items").innerHTML=ids.length?ids.map(id=>{const p=prod(id),q=state.cart[id];
+    return `<div class="it"><div class="row"><div style="display:flex;gap:10px;align-items:center"><div class="th">${p.img?`<img src="${p.img}" alt="" loading="lazy" onerror="this.remove()">`:""}</div><b>${p.name}</b></div><span>${fmt(p.price*q)}</span></div>
+    <div style="font-size:.8rem;color:var(--mute)">${fmt(p.price)} cada</div>
+    <div class="q"><button onclick="chg('${id}',-1)">−</button><span>${q}</span><button onclick="chg('${id}',1)">+</button><button class="rm" onclick="del('${id}')">Remover</button></div></div>`}).join(""):`<div class="note">O carrinho está vazio.</div>`;
+  $("#tots").innerHTML=totHTML(t);
+}
+function openCart(){renderCart();$("#drawer").classList.add("on")}
+function closeCart(){$("#drawer").classList.remove("on")}
+
+function setZone(id){
+  state.zone=id;const z=zone();
+  if(z&&z.store){state.store=z.store;$("#loja").value=z.store;updMap()}
+  updDinfo();renderSummary();renderCart();
+}
+function updDinfo(){
+  const D=CONFIG.delivery,z=zone(),a=[];
+  a.push(z&&typeof z.fee==="number"?"Taxa de entrega: "+fmt(z.fee):"Taxa de entrega: a confirmar pela loja");
+  if(D.eta)a.push("Tempo estimado: "+D.eta);
+  if(D.minOrder)a.push("Pedido mínimo: "+fmt(D.minOrder));
+  if(D.freeFrom)a.push("Entrega grátis a partir de "+fmt(D.freeFrom));
+  $("#dinfo").textContent=a.join(" · ");
+}
+function getLoc(){
+  const st=$("#locst");
+  if(!navigator.geolocation){st.textContent="Localização indisponível.";return}
+  st.textContent="A obter localização...";
+  navigator.geolocation.getCurrentPosition(p=>{state.coords=p.coords.latitude.toFixed(5)+","+p.coords.longitude.toFixed(5);st.textContent="Localização anexada ao pedido."},()=>{st.textContent="Não foi possível obter a localização. Escreve o endereço."},{enableHighAccuracy:true,timeout:10000});
+}
+function setMode(m){
+  state.mode=m;$("#m-del").classList.toggle("on",m==="Delivery");$("#m-lev").classList.toggle("on",m!=="Delivery");
+  $("#addrbox").style.display=m==="Delivery"?"block":"none";
+  if(m==="Delivery")setZone(state.zone);
+  renderSummary();renderCart();
+}
+function renderSummary(){
+  const ids=Object.keys(state.cart).filter(prod);
+  $("#resumo").innerHTML="<b>Resumo do pedido</b>"+(ids.length?ids.map(id=>{const p=prod(id),q=state.cart[id];
+    return `<div class="ln"><span style="display:flex;gap:8px;align-items:center"><i class="th s">${p.img?`<img src="${p.img}" alt="" loading="lazy" onerror="this.remove()">`:""}</i>${q} × ${p.name}</span><span>${fmt(p.price*q)}</span></div>`}).join(""):`<div class="note" style="margin-top:8px">Sem produtos. Volta ao menu para adicionar.</div>`)+totHTML(totals());
+}
+function confirmar(){
+  const ids=Object.keys(state.cart).filter(prod);
+  if(!ids.length){alert("Adiciona produtos ao carrinho primeiro.");return}
+  const nome=$("#nome").value.trim(),tel=$("#tel").value.trim(),end=$("#end").value.trim();
+  if(!nome||!tel){alert("Preenche o nome e o telefone.");return}
+  if(state.mode==="Delivery"&&!end){alert("Indica o endereço de entrega.");return}
+  const D=CONFIG.delivery;
+  if(state.mode==="Delivery"&&D.minOrder&&totals().sub<D.minOrder){alert("Pedido mínimo para entrega: "+fmt(D.minOrder));return}
+  const st=STORES.find(s=>s.id===state.store)||STORES[1],t=totals();
+  const lines=ids.map(id=>{const p=prod(id),q=state.cart[id];return `- ${q} x ${p.name} (${p.price} MT) = ${p.price*q} MT`});
+  const feeTxt=state.mode==="Delivery"?(t.pending?"a confirmar":t.fee+" MT"):"n/a";
+  const msg=["NOVO PEDIDO #"+Date.now().toString().slice(-6)+" — ALITA’S","","Cliente: "+nome,"Telefone: "+tel,"Recebimento: "+state.mode,
+    state.mode==="Delivery"?"Zona: "+(zone()?zone().name:"")+"\nEndereço: "+end+(state.coords?"\nLocalização: https://maps.google.com/?q="+state.coords:""):"","Loja: "+st.name+(st.maps?"\nMapa: "+st.maps:""),"","Produtos:",...lines,"",
+    "Subtotal: "+t.sub+" MT","Taxa de entrega: "+feeTxt,"TOTAL: "+t.total+" MT"+(t.pending?" + entrega":""),
+    $("#obs").value.trim()?"\nObservações: "+$("#obs").value.trim():""].filter((l,i,a)=>l!==""||a[i-1]!=="").join("\n");
+  $("#msg").textContent=msg;$("#msgbox").style.display="block";
+  $("#wasend").href="https://wa.me/"+st.wa+"?text="+encodeURIComponent(msg);
+  $("#msgbox").scrollIntoView({behavior:"smooth"});
+}
+function storeHTML(s){return `<div class="store"><h3>${s.name}</h3><p style="margin:6px 0"><a href="https://wa.me/${s.wa}" target="_blank" rel="noopener">+${s.wa.slice(0,3)} ${s.wa.slice(3,5)} ${s.wa.slice(5,8)} ${s.wa.slice(8)}</a></p><span style="font-size:.8rem;color:var(--mute)">WhatsApp</span>${s.addr?`<p style="font-size:.85rem;color:var(--mute);margin-top:8px">${s.addr}</p>`:""}${s.maps?`<p style="margin-top:6px"><a href="${s.maps}" target="_blank" rel="noopener">Ver no Google Maps</a></p>`:""}</div>`}
+function updMap(){const s=STORES.find(x=>x.id===state.store),a=$("#lojamap");if(s&&s.maps){a.href=s.maps;a.textContent="Ver "+s.name+" no Google Maps";a.style.display="inline"}else a.style.display="none"}
+
+$("#popular").innerHTML=PRODUCTS.filter(p=>p.pop||["h3","h6","b3","b5"].includes(p.id)).map(card).join("");
+$("#cats").innerHTML=[["Hambúrgueres","h2"],["Burritos","b3"],["Fries","f1"]].map(c=>`<div class="cat" onclick="state.cat='${c[0]}';$('#q').value='';renderMenu();go('menu')"><img src="${IMGS[c[1]]}" alt="" loading="lazy" onerror="this.remove()"><b>${c[0]}</b></div>`).join("");
+$("#stores").innerHTML=$("#stores2").innerHTML=STORES.map(storeHTML).join("");
+$("#loja").innerHTML=STORES.map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
+$("#loja").value=state.store;updMap();
+$("#zona").innerHTML=CONFIG.delivery.zones.map(z=>`<option value="${z.id}">${z.name}${typeof z.fee==="number"?" — "+fmt(z.fee):""}</option>`).join("");
+updDinfo();
+$("#wafloat").href=$("#herowa").href="https://wa.me/"+CONFIG.defaultWhatsApp;
+$("#brand").src=$("#flogo").src=IMGS.logo;
+$("#brand").onerror=$("#flogo").onerror=function(){this.style.display="none"};
+$("#herobg").style.backgroundImage=`url("${IMGS.hero}")`;
+$("#herobg").style.backgroundSize="cover";
+renderMenu();renderCart();go(location.hash.slice(1)||"home");
+</script>
+</body>
+</html>
